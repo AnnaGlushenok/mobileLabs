@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SecondActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp"
+        tools:layout_editor_absoluteX="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="mainActivity"
+                android:text="@string/main" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/main_container">
+
+                <LinearLayout style="@style/vertical_container">
+
+                    <Button
+                        android:id="@+id/button1"
+                        style="@style/btn"
+                        android:text="@string/name1" />
+
+                    <Button
+                        android:id="@+id/button2"
+                        style="@style/btn"
+                        android:text="@string/name2" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/horizontal_container">
+
+                    <Button
+                        android:id="@+id/button3"
+                        style="@style/btn"
+                        android:background="#4CAF50"
+                        android:text="@string/name3" />
+
+                    <Button
+                        android:id="@+id/button4"
+                        style="@style/btn"
+                        android:text="@string/name4" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout style="@style/main_container">
+
+                <LinearLayout style="@style/horizontal_container">
+
+                    <Button
+                        android:id="@+id/button5"
+                        style="@style/btn"
+                        android:text="@string/name5" />
+
+                    <Button
+                        android:id="@+id/button6"
+                        style="@style/btn"
+                        android:text="@string/name6" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/vertical_container">
+
+                    <Button
+                        android:id="@+id/button7"
+                        style="@style/btn"
+                        android:text="@string/name7" />
+
+                    <Button
+                        android:id="@+id/button8"
+                        style="@style/btn"
+                        android:text="@string/name8" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
