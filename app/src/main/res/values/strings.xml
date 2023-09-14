@@ -1,13 +1,3 @@
 <resources>
     <string name="app_name">lab1</string>
-    <string name="main">1 Задание</string>
-    <string name="secondTask">2 Задание</string>
-    <string name="name1">Вася</string>
-    <string name="name2">Катя</string>
-    <string name="name3">Таня</string>
-    <string name="name4">Коля</string>
-    <string name="name5">Вика</string>
-    <string name="name6">Маша</string>
-    <string name="name7">Лиза</string>
-    <string name="name8">Рома</string>
 </resources>

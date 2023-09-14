@@ -19,15 +19,4 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
-    public void find(View view) {
-        ((TextView) findViewById(R.id.resultView))
-                .setText(((EditText) findViewById(R.id.inputText)).getText().toString() + ": " + new Random().nextInt(10));
-        InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-    }
-
-    public void secondActivity(View view) {
-        startActivity(new Intent(this, SecondActivity.class));
-    }
 }
