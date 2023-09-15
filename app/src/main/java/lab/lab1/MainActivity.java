@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViewById(R.id.radio_group).setVisibility(View.VISIBLE);
         List<Student> students = (List<Student>) getIntent().getSerializableExtra("students");
 
         StringBuilder str = new StringBuilder();
