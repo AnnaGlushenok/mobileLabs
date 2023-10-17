@@ -1,0 +1,43 @@
+package lab.lab1;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import java.util.List;
+
+public class StudentAdapter extends ArrayAdapter<Student> {
+    private List<Student> students;
+
+    public StudentAdapter(@NonNull Context context, List<Student> students) {
+        super(context, R.layout.card, students);
+        this.students = students;
+    }
+
+    @NonNull
+    @Override
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        if (convertView == null)
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.card, parent, false);
+
+        Student student = students.get(position);
+        TextView surname = convertView.findViewById(R.id.student_surname);
+        TextView name = convertView.findViewById(R.id.student_name);
+        TextView department = convertView.findViewById(R.id.student_department);
+        TextView group = convertView.findViewById(R.id.student_group);
+        TextView birth = convertView.findViewById(R.id.student_birth);
+
+        surname.setText(student.getSurname());
+        name.setText(student.getName());
+        department.setText(student.getDepartment());
+        group.setText(student.getGroup());
+        birth.setText(student.getBirth());
+        return convertView;
+    }
+}
