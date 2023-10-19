@@ -8,42 +8,54 @@ public interface Contract {
 
         void add(Student student);
 
-        void edit(Student student);
+        void edit(Student oldStudent, Student newStudent);
 
         void delete(Student student);
     }
 
-    interface View {// это вью
+    interface View {
 
         interface MainView {
-            void showAllStudents( List<Student> students);
+            void showAllStudents(List<Student> students);
 
-            void showStudentsByDepartment();
-
-            void showStudentsByBirth();
-
-            void deleteStudent();
+            void showStudentsByDepartment(List<Student> students);
         }
 
         interface AddView {
             void addStudent();
+
+            void onClose();
         }
 
         interface EditView {
             void editStudent();
+
+            void onClose();
         }
     }
 
-    interface Presenter {// а это связь, шота типа BLL
+    interface Presenter {
 
-        void onStart();
+        interface MainPresenter {
+            void showAll();
 
-        void onAddStudentClick();
+            void onAddStudentClick();
 
-        void onEditStudentClick();
+            void onEditStudentClick(Student student);
 
-        void onStudentsByDepartmentClick();
+            void onDeleteStudentClick(Student student);
 
-        void onStudentsByBirthClick();
+            void onStudentsByDepartmentClick(String department);
+
+            void onStudentsByBirthClick(String birth);
+        }
+
+        interface AddPresenter {
+            void onAddStudent(Student student);
+        }
+
+        interface EditPresenter {
+            void onEditStudent(Student oldStudent, Student newStudent);
+        }
     }
 }

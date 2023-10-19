@@ -10,4 +10,6 @@
     <string name="department">Факультет</string>
     <string name="group">Группа</string>
     <string name="birth">Дата рождения dd.mm.yyyy</string>
+    <string name="add">Добавить</string>
+    <string name="edit">Изменить</string>
 </resources>

@@ -3,7 +3,8 @@ package lab.lab1;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Model implements Contract.Model {//это данные
+public class Model implements Contract.Model {
+    private static Contract.Model model;
     private List<Student> students = new ArrayList<Student>() {
         {
             add(new Student("Глушенок", "Анна", "ФАИС", "ИП41", "27.04.2003"));
@@ -11,10 +12,16 @@ public class Model implements Contract.Model {//это данные
             add(new Student("Горбанёв", "Рома", "ГЭФ", "ИП41", "08.03.2003"));
             add(new Student("Коваленко", "Настя", "ФАИС", "ИП41", "16.07.2002"));
             add(new Student("Гудойть", "Влад", "МТФ", "ИП41", "31.10.2000"));
-            add(new Student("Макеев", "Миша", "МСФ", "ИП41", "12.11.2001"));
+            add(new Student("Макеев", "Миша", "МСФ", "ИП41", "12.11.2000"));
             add(new Student("Падалица", "Максим", "ЭФ", "ИП41", "06.09.2001"));
         }
     };
+
+    public static Contract.Model getModel() {
+        if (model == null)
+            model = new Model();
+        return model;
+    }
 
     @Override
     public List<Student> get() {
@@ -27,9 +34,9 @@ public class Model implements Contract.Model {//это данные
     }
 
     @Override
-    public void edit(Student student) {
-        students.remove(student);
-        students.add(student);
+    public void edit(Student oldStudent, Student newStudent) {
+        students.remove(oldStudent);
+        students.add(newStudent);
     }
 
     @Override
