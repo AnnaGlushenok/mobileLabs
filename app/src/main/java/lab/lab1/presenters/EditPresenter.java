@@ -11,7 +11,7 @@ public class EditPresenter implements Contract.Presenter.EditPresenter {
 
     public EditPresenter(EditStudentActivity activity) {
         this.activity = activity;
-        this.model = Model.getModel();
+        this.model = Model.getModel(activity.getFilesDir());
     }
 
     @Override

@@ -18,11 +18,12 @@ public class MainPresenter implements Contract.Presenter.MainPresenter {
 
     public MainPresenter(MainActivity activity) {
         this.activity = activity;
-        model = Model.getModel();
+        model = Model.getModel(activity.getFilesDir());
     }
 
     @Override
     public void showAll() {
+        activity.showProgressBar();
         activity.showAllStudents(model.get());
     }
 
@@ -44,6 +45,7 @@ public class MainPresenter implements Contract.Presenter.MainPresenter {
 
     @Override
     public void onStudentsByDepartmentClick(String department) {
+        activity.showProgressBar();
         activity.showStudentsByDepartment(model
                 .get()
                 .stream()
@@ -53,6 +55,7 @@ public class MainPresenter implements Contract.Presenter.MainPresenter {
 
     @Override
     public void onStudentsByBirthClick(String birth) {
+        activity.showProgressBar();
         activity.showStudentsByDepartment(model
                 .get()
                 .stream()

@@ -11,7 +11,7 @@ public class AddPresenter implements Contract.Presenter.AddPresenter {
 
     public AddPresenter(AddStudentActivity activity) {
         this.activity = activity;
-        this.model = Model.getModel();
+        this.model = Model.getModel(activity.getFilesDir());
     }
 
     @Override
