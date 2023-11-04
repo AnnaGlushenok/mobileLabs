@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">lab1</string>
+    <string name="converter">Currency Converter</string>
+    <string name="enter_sum">Enter the sum</string>
+    <string name="sum_hint">Enter the sum in BYN</string>
+    <string name="result">Result</string>
+    <string name="result_hint">Result will appear here</string>
+    <string name="choose_currency">Choose Currency</string>
+    <string name="calculate">Calculate</string>
+    <string name="buy">Buy</string>
+    <string name="sold">Sold</string>
+
+    <string-array name="spinner_array">
+        <item>USD</item>
+        <item>EUR</item>
+        <item>TGC</item>
+        <item>RUB</item>
+    </string-array>
 </resources>

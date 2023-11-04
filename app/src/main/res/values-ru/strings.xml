@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">lab1</string>
+    <string name="converter">Конвертёр валют</string>
+    <string name="enter_sum">Введите сумму</string>
+    <string name="sum_hint">Введите сумму в бел. рублях</string>
+    <string name="result">Результат</string>
+    <string name="result_hint">Здесь появится результат</string>
+    <string name="choose_currency">Выберите валюту</string>
+    <string name="calculate">Расчитать</string>
+    <string name="buy">Покупка</string>
+    <string name="sold">Продажа</string>
+
+    <string-array name="spinner_array">
+        <item>Доллар</item>
+        <item>Евро</item>
+        <item>Тугрик</item>
+        <item>Рубль РФ</item>
+    </string-array>
+</resources>
