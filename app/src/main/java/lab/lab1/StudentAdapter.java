@@ -29,15 +29,9 @@ public class StudentAdapter extends ArrayAdapter<Student> {
         Student student = students.get(position);
         TextView surname = convertView.findViewById(R.id.student_surname);
         TextView name = convertView.findViewById(R.id.student_name);
-        TextView department = convertView.findViewById(R.id.student_department);
-        TextView group = convertView.findViewById(R.id.student_group);
-        TextView birth = convertView.findViewById(R.id.student_birth);
 
         surname.setText(student.getSurname());
         name.setText(student.getName());
-        department.setText(student.getDepartment());
-        group.setText(student.getGroup());
-        birth.setText(student.getBirth());
         return convertView;
     }
 }

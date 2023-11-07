@@ -1,43 +1,81 @@
 package lab.lab1.activities;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
-import java.util.List;
+import com.google.android.material.tabs.TabLayout;
 
-import lab.lab1.Contract;
+import lab.lab1.PagerAdapter;
 import lab.lab1.R;
-import lab.lab1.Student;
-import lab.lab1.StudentAdapter;
-import lab.lab1.presenters.MainPresenter;
 
-public class MainActivity extends AppCompatActivity implements Contract.View.MainView {
-    private Contract.Presenter.MainPresenter presenter;
-    private ListView listView;
-    private StudentAdapter adapter;
-    private Student selectedStudent;
+public class MainActivity extends AppCompatActivity implements Find {
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
+    private ProgressDialog progressDialog;
+    private StudentFragment studentFragment;
+    private InputDialog yearDialog, departmentDialog;
+    private AlertDialog.Builder deleteDialog;
+    private String command;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        presenter = new MainPresenter(this);
-        listView = findViewById(R.id.list_view);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        viewPager = findViewById(R.id.view_pager);
+        tabLayout = findViewById(R.id.tab_layout);
+
+        tabLayout.setupWithViewPager(viewPager);
+        PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        studentFragment = new StudentFragment();
+        pagerAdapter.addFragment(studentFragment, getResources().getString(R.string.student_tab));
+        pagerAdapter.addFragment(new DetailFragment(), getResources().getString(R.string.detail_tab));
+        viewPager.setAdapter(pagerAdapter);
+
+        Bundle bundle1 = new Bundle();
+        Bundle bundle2 = new Bundle();
+        bundle1.putString("title", "Введите год");
+        bundle2.putString("title", "Введите факультет");
+        yearDialog = new InputDialog();
+        departmentDialog = new InputDialog();
+        yearDialog.setArguments(bundle1);
+        departmentDialog.setArguments(bundle2);
+
+        deleteDialog = new AlertDialog.Builder(this);
+        deleteDialog.setTitle("Чё прям удалить")
+                .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        studentFragment.presenter.onDeleteStudentClick(studentFragment.selectedStudent);
+                    }
+                })
+                .setNegativeButton("Нет", null)
+                .create();
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Загрузка");
+        progressDialog.setMessage("Происходит что-то страшное");
+        progressDialog.setButton(Dialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedStudent = (Student) adapterView.getItemAtPosition(i);
+            public void onClick(DialogInterface dialog, int which) {
             }
         });
-        presenter.showAll();
+    }
+
+    public void showProgressBar() {
+//        progressDialog.show();
     }
 
     @Override
@@ -49,30 +87,51 @@ public class MainActivity extends AppCompatActivity implements Contract.View.Mai
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        if (id == R.id.find || id == R.id.themes)
+            return true;
+        else if (id == R.id.all) {
+            studentFragment.presenter.showAll();
+            return true;
+        }
         if (id == R.id.add)
-            presenter.onAddStudentClick();
-        else if (id == R.id.find_by_birth)
-            presenter.onStudentsByBirthClick("2000");
-        else if (id == R.id.find_by_department)
-            presenter.onStudentsByDepartmentClick("ФАИС");
-        else if (selectedStudent == null)
+            studentFragment.presenter.onAddStudentClick();
+        else if (id == R.id.find_by_birth) {
+            yearDialog.show(getSupportFragmentManager(), "Birth");
+            command = "Birth";
+        } else if (id == R.id.find_by_department) {
+            departmentDialog.show(getSupportFragmentManager(), "Department");
+            command = "Department";
+        } else if (id == R.id.theme_default)
+            this.setTheme(R.style.Base_Theme_Default);
+        else if (id == R.id.theme_dark)
+            this.setTheme(R.style.Base_Theme_Dark);
+        else if (id == R.id.theme_color)
+            this.setTheme(R.style.Base_Theme_Color);
+        else if (studentFragment.selectedStudent == null)
             Toast.makeText(this, "Выберите студента", Toast.LENGTH_LONG).show();
         else if (id == R.id.edit)
-            presenter.onEditStudentClick(selectedStudent);
+            studentFragment.presenter.onEditStudentClick(studentFragment.selectedStudent);
         else if (id == R.id.delete)
-            presenter.onDeleteStudentClick(selectedStudent);
+            deleteDialog.show();
+//        new Handler().post(new Runnable() {
+//            @Override
+//            public void run() {
+//                recreate();
+//            }
+//        });
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void showAllStudents(List<Student> students) {
-        adapter = new StudentAdapter(this, students);
-        listView.setAdapter(adapter);
-    }
-
-    @Override
-    public void showStudentsByDepartment(List<Student> students) {
-        adapter = new StudentAdapter(this, students);
-        listView.setAdapter(adapter);
+    public void find(String criteria) {
+        studentFragment.find(criteria);
+        switch (command) {
+            case "Birth":
+                studentFragment.presenter.onStudentsByBirthClick();
+                break;
+            case "Department":
+                studentFragment.presenter.onStudentsByDepartmentClick();
+                break;
+        }
     }
 }

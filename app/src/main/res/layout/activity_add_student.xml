@@ -53,9 +53,9 @@
             android:layout_height="wrap_content"
             android:text="@string/department" />
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/department"
-            android:layout_width="match_parent"
+            android:layout_width="match_parent" android:completionThreshold="1"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text" />
@@ -65,9 +65,9 @@
             android:layout_height="wrap_content"
             android:text="@string/group" />
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/group"
-            android:layout_width="match_parent"
+            android:layout_width="match_parent" android:completionThreshold="1"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text" />

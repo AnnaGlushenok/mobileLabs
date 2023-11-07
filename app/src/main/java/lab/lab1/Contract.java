@@ -45,17 +45,27 @@ public interface Contract {
 
             void onDeleteStudentClick(Student student);
 
-            void onStudentsByDepartmentClick(String department);
+            void onStudentsByDepartmentClick();
 
-            void onStudentsByBirthClick(String birth);
+            void onStudentsByBirthClick();
+
+            void onCriteriaEnter(String criteria);
         }
 
         interface AddPresenter {
             void onAddStudent(Student student);
+
+            void getDepartments();
+
+            void getGroups();
         }
 
         interface EditPresenter {
             void onEditStudent(Student oldStudent, Student newStudent);
+
+            void getDepartments();
+
+            void getGroups();
         }
     }
 }

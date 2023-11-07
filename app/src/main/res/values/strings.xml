@@ -1,10 +1,11 @@
 <resources>
-    <string name="app_name">lab1</string>
+    <string name="app_name">Студентики</string>
+    <string name="settings_all">Все</string>
     <string name="settings_add">Добавить</string>
     <string name="settings_edit">Редактировать</string>
     <string name="settings_delete">Удалить</string>
-    <string name="settings_find_by_department">Студенты ФАИС</string>
-    <string name="settings_find_by_birth">Студенты 2000 года</string>
+    <string name="settings_find_by_department">Студенты по факультету</string>
+    <string name="settings_find_by_birth">Студенты по году</string>
     <string name="surname">Фамилия</string>
     <string name="name">Имя</string>
     <string name="department">Факультет</string>
@@ -12,4 +13,11 @@
     <string name="birth">Дата рождения dd.mm.yyyy</string>
     <string name="add">Добавить</string>
     <string name="edit">Изменить</string>
+    <string name="student_tab">Студенты</string>
+    <string name="detail_tab">Подробнее</string>
+    <string name="theme_default">Стандартная</string>
+    <string name="theme_dark">Тёмная</string>
+    <string name="theme_color">Цветная</string>
+    <string name="themes">Темы</string>
+    <string name="find">Поиск</string>
 </resources>

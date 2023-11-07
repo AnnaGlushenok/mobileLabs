@@ -3,9 +3,13 @@ package lab.lab1.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.List;
 
 import lab.lab1.Contract;
 import lab.lab1.R;
@@ -14,14 +18,20 @@ import lab.lab1.presenters.EditPresenter;
 
 public class EditStudentActivity extends AppCompatActivity implements Contract.View.EditView {
     private Contract.Presenter.EditPresenter presenter;
-    private TextView surname, name, department, group, birth;
+    private TextView surname, name, birth;
+    private AutoCompleteTextView department, group;
     private Student student;
+    public List<String> departments;
+    public List<String> groups;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_student);
         presenter = new EditPresenter(this);
+        presenter.getDepartments();
+        presenter.getGroups();
+
         student = (Student) getIntent().getSerializableExtra("student");
         surname = findViewById(R.id.surname);
         name = findViewById(R.id.name);
@@ -34,6 +44,11 @@ public class EditStudentActivity extends AppCompatActivity implements Contract.V
         department.setText(student.getDepartment());
         group.setText(student.getGroup());
         birth.setText(student.getBirth());
+
+        ArrayAdapter<String> departmentsAdapter = new ArrayAdapter<>(this, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item, departments);
+        ArrayAdapter<String> groupsAdapter = new ArrayAdapter<>(this, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item, groups);
+        department.setAdapter(departmentsAdapter);
+        group.setAdapter(groupsAdapter);
         findViewById(R.id.edit_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
