@@ -1,20 +1,22 @@
 package lab.lab1;
 
-import android.util.Log;
+import android.app.Activity;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import androidx.lifecycle.LiveData;
+import androidx.room.Room;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+import java.util.concurrent.Executor;
+
+import lab.lab1.db.DataBase;
+import lab.lab1.db.StudentDAO;
 
 public class Model implements Contract.Model {
     private static Contract.Model model;
-    private File file;
-    private List<Student> students = new ArrayList<>();
+    private StudentDAO studentDAO;
+    private Activity activity;
+    private Executor executor;
 //    private List<Student> students = new ArrayList<Student>() {
 //        {
 //            add(new Student("Глушенок", "Анна", "ФАИС", "ИП41", "27.04.2003"));
@@ -27,63 +29,53 @@ public class Model implements Contract.Model {
 //        }
 //    };
 
-    public static Contract.Model getModel(File file) {
+    public static Contract.Model getModel(Activity activity) {
         if (model == null)
-            model = new Model(file);
+            model = new Model(activity);
         return model;
     }
 
-    private Model(File file) {
-        this.file = file;
-    }
-
-    private List<Student> readFile() {
-        List<Student> students = new ArrayList<>();
-        try (Scanner scan = new Scanner(new FileReader(new File(file, "students.txt")))) {
-            while (scan.hasNextLine()) {
-                String[] line = scan.nextLine().split(" ");
-                students.add(new Student(line[0], line[1], line[2], line[3], line[4]));
-            }
-        } catch (FileNotFoundException e) {
-            Log.e("File", "File not found");
-        }
-        return students;
-    }
-
-    private void write(List<Student> students) {
-        try (FileWriter fw = new FileWriter(new File(file, "students.txt"))) {
-            for (Student student : students)
-                fw.write(student.toString() + "\n");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private Model(Activity activity) {
+        this.activity = activity;
+        studentDAO = Room
+                .databaseBuilder(activity.getApplicationContext(), DataBase.class, "students")
+                .allowMainThreadQueries()
+                .build()
+                .studentDao();
     }
 
     @Override
-    public List<Student> get() {
-        return readFile();
+    public LiveData<List<Student>> getAll() {
+        return studentDAO.getAll();
+    }
+
+    @Override
+    public LiveData<List<String>> getDistinctGroups() {
+        return studentDAO.getDistinctGroups();
+    }
+
+    @Override
+    public LiveData<List<String>> getDistinctDepartments() {
+        return studentDAO.getDistinctDepartments();
+    }
+
+    @Override
+    public LiveData<List<Student>> getByDepartment(String department) {
+        return studentDAO.getAllByDepartment(department);
     }
 
     @Override
     public void add(Student student) {
-        students = readFile();
-        students.add(student);
-        write(students);
+        studentDAO.insert(student);
     }
 
     @Override
-    public void edit(Student oldStudent, Student newStudent) {
-        students = readFile();
-        students.remove(oldStudent);
-        students.add(newStudent);
-        write(students);
+    public void edit(Student student) {
+        studentDAO.update(student);
     }
 
     @Override
     public void delete(Student student) {
-        students = readFile();
-        students.remove(student);
-        write(students);
+        studentDAO.delete(student);
     }
 }

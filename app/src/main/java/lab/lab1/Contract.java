@@ -1,14 +1,22 @@
 package lab.lab1;
 
+import androidx.lifecycle.LiveData;
+
 import java.util.List;
 
 public interface Contract {
     interface Model {
-        List<Student> get();
+        LiveData<List<Student>> getAll();
+
+        LiveData<List<String>> getDistinctGroups();
+
+        LiveData<List<String>> getDistinctDepartments();
+
+        LiveData<List<Student>> getByDepartment(String department);
 
         void add(Student student);
 
-        void edit(Student oldStudent, Student newStudent);
+        void edit(Student student);
 
         void delete(Student student);
     }
@@ -61,7 +69,7 @@ public interface Contract {
         }
 
         interface EditPresenter {
-            void onEditStudent(Student oldStudent, Student newStudent);
+            void onEditStudent(Student student);
 
             void getDepartments();
 

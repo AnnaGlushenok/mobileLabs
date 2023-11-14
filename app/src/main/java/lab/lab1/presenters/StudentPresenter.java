@@ -20,7 +20,7 @@ public class StudentPresenter implements Contract.Presenter.MainPresenter {
 
     public StudentPresenter(StudentFragment fragment) {
         this.fragment = fragment;
-        model = Model.getModel(fragment.getActivity().getFilesDir());
+        model = Model.getModel(fragment.getActivity());
     }
 
     @Override
@@ -30,8 +30,9 @@ public class StudentPresenter implements Contract.Presenter.MainPresenter {
 
     @Override
     public void showAll() {
-        ((MainActivity) fragment.getActivity()).showProgressBar();
-        fragment.showAllStudents(model.get());
+        model.getAll().observe(fragment.getActivity(), s ->
+                fragment.showAllStudents(s)
+        );
     }
 
     @Override
@@ -53,20 +54,19 @@ public class StudentPresenter implements Contract.Presenter.MainPresenter {
     @Override
     public void onStudentsByDepartmentClick() {
         ((MainActivity) fragment.getActivity()).showProgressBar();
-        fragment.showStudentsByDepartment(model
-                .get()
-                .stream()
-                .filter(d -> d.getDepartment().equals(criteria))
-                .collect(Collectors.toList()));
+        model.getByDepartment(criteria).observe(fragment.getActivity(), s ->
+                fragment.showStudentsByDepartment(s)
+        );
     }
 
     @Override
     public void onStudentsByBirthClick() {
         ((MainActivity) fragment.getActivity()).showProgressBar();
-        fragment.showStudentsByDepartment(model
-                .get()
-                .stream()
-                .filter(d -> d.getBirth().matches(".*" + criteria))
-                .collect(Collectors.toList()));
+        model.getAll().observe(fragment.getActivity(), s ->
+                fragment.showStudentsByDepartment(s
+                        .stream()
+                        .filter(d -> d.getBirth().matches(".*" + criteria))
+                        .collect(Collectors.toList()))
+        );
     }
 }

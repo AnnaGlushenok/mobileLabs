@@ -1,6 +1,8 @@
 package lab.lab1.presenters;
 
-import java.util.stream.Collectors;
+import androidx.lifecycle.Observer;
+
+import java.util.List;
 
 import lab.lab1.Contract;
 import lab.lab1.Model;
@@ -13,7 +15,7 @@ public class AddPresenter implements Contract.Presenter.AddPresenter {
 
     public AddPresenter(AddStudentActivity activity) {
         this.activity = activity;
-        this.model = Model.getModel(activity.getFilesDir());
+        this.model = Model.getModel(activity);
     }
 
     @Override
@@ -25,19 +27,21 @@ public class AddPresenter implements Contract.Presenter.AddPresenter {
 
     @Override
     public void getDepartments() {
-        activity.departments = model.get()
-                .stream()
-                .map(Student::getDepartment)
-                .distinct()
-                .collect(Collectors.toList());
+        model.getDistinctDepartments().observe(activity, new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> strings) {
+                activity.onDepartmentLoad(strings);
+            }
+        });
     }
 
     @Override
     public void getGroups() {
-        activity.groups = model.get()
-                .stream()
-                .map(Student::getGroup)
-                .distinct()
-                .collect(Collectors.toList());
+        model.getDistinctGroups().observe(activity, new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> strings) {
+                activity.onGroupLoad(strings);
+            }
+        });
     }
 }

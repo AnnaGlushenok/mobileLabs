@@ -14,15 +14,14 @@ import java.util.List;
 import lab.lab1.Contract;
 import lab.lab1.R;
 import lab.lab1.Student;
+import lab.lab1.presenters.CallBack;
 import lab.lab1.presenters.EditPresenter;
 
-public class EditStudentActivity extends AppCompatActivity implements Contract.View.EditView {
+public class EditStudentActivity extends AppCompatActivity implements Contract.View.EditView, CallBack.DepartmentCallBack, CallBack.GroupCallBack {
     private Contract.Presenter.EditPresenter presenter;
     private TextView surname, name, birth;
     private AutoCompleteTextView department, group;
     private Student student;
-    public List<String> departments;
-    public List<String> groups;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +44,6 @@ public class EditStudentActivity extends AppCompatActivity implements Contract.V
         group.setText(student.getGroup());
         birth.setText(student.getBirth());
 
-        ArrayAdapter<String> departmentsAdapter = new ArrayAdapter<>(this, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item, departments);
-        ArrayAdapter<String> groupsAdapter = new ArrayAdapter<>(this, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item, groups);
-        department.setAdapter(departmentsAdapter);
-        group.setAdapter(groupsAdapter);
         findViewById(R.id.edit_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,16 +54,28 @@ public class EditStudentActivity extends AppCompatActivity implements Contract.V
 
     @Override
     public void editStudent() {
-        presenter.onEditStudent(student,
-                new Student(surname.getText().toString(),
-                        name.getText().toString(),
-                        department.getText().toString(),
-                        group.getText().toString(),
-                        birth.getText().toString()));
+        presenter.onEditStudent(new Student(student.getId(),
+                surname.getText().toString(),
+                name.getText().toString(),
+                department.getText().toString(),
+                group.getText().toString(),
+                birth.getText().toString()));
     }
 
     @Override
     public void onClose() {
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    @Override
+    public void onDepartmentLoad(List<String> data) {
+        ArrayAdapter<String> departmentsAdapter = new ArrayAdapter<>(this, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item, data);
+        department.setAdapter(departmentsAdapter);
+    }
+
+    @Override
+    public void onGroupLoad(List<String> data) {
+        ArrayAdapter<String> groupAdapter = new ArrayAdapter<>(this, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item, data);
+        group.setAdapter(groupAdapter);
     }
 }

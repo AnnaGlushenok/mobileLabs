@@ -15,13 +15,12 @@ import lab.lab1.Contract;
 import lab.lab1.R;
 import lab.lab1.Student;
 import lab.lab1.presenters.AddPresenter;
+import lab.lab1.presenters.CallBack;
 
-public class AddStudentActivity extends AppCompatActivity implements Contract.View.AddView {
+public class AddStudentActivity extends AppCompatActivity implements Contract.View.AddView, CallBack.DepartmentCallBack, CallBack.GroupCallBack {
     private Contract.Presenter.AddPresenter presenter;
     private TextView surname, name, birth;
     private AutoCompleteTextView department, group;
-    public List<String> departments;
-    public List<String> groups;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +32,10 @@ public class AddStudentActivity extends AppCompatActivity implements Contract.Vi
 
         surname = findViewById(R.id.surname);
         name = findViewById(R.id.name);
+        birth = findViewById(R.id.birth);
         department = findViewById(R.id.department);
         group = findViewById(R.id.group);
-        birth = findViewById(R.id.birth);
-        ArrayAdapter<String> departmentsAdapter = new ArrayAdapter<>(this, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item, departments);
-        ArrayAdapter<String> groupsAdapter = new ArrayAdapter<>(this, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item, groups);
-        department.setAdapter(departmentsAdapter);
-        group.setAdapter(groupsAdapter);
+
         findViewById(R.id.add_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,5 +56,17 @@ public class AddStudentActivity extends AppCompatActivity implements Contract.Vi
     @Override
     public void onClose() {
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    @Override
+    public void onDepartmentLoad(List<String> data) {
+        ArrayAdapter<String> departmentsAdapter = new ArrayAdapter<>(this, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item, data);
+        department.setAdapter(departmentsAdapter);
+    }
+
+    @Override
+    public void onGroupLoad(List<String> data) {
+        ArrayAdapter<String> groupAdapter = new ArrayAdapter<>(this, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item, data);
+        group.setAdapter(groupAdapter);
     }
 }
