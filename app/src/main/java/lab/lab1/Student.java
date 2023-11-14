@@ -2,11 +2,25 @@ package lab.lab1;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+@Entity
 public class Student implements Serializable {
+    @PrimaryKey(autoGenerate = true)
+    private long id;
     private String surname, name, department, group, birth;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getSurname() {
         return surname;
@@ -28,12 +42,18 @@ public class Student implements Serializable {
         return birth;
     }
 
+    @Ignore
     public Student(String surname, String name, String department, String group, String birth) {
         this.surname = surname;
         this.name = name;
         this.department = department;
         this.group = group;
         this.birth = birth;
+    }
+
+    public Student(long id, String surname, String name, String department, String group, String birth) {
+        this(surname, name, department, group, birth);
+        this.id = id;
     }
 
     @NonNull
