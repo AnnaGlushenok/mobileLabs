@@ -1,37 +1,61 @@
 package lab.lab1;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class StudentAdapter extends ArrayAdapter<Student> {
+public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentViewHolder> {
     private List<Student> students;
+    private OnItemClickListener listener;
 
-    public StudentAdapter(@NonNull Context context, List<Student> students) {
-        super(context, R.layout.card, students);
+    public StudentAdapter(List<Student> students, OnItemClickListener listener) {
         this.students = students;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        if (convertView == null)
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.card, parent, false);
+    public StudentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new StudentViewHolder(LayoutInflater
+                .from(parent.getContext())
+                .inflate(R.layout.card, parent, false)
+        );
+    }
 
+    @Override
+    public void onBindViewHolder(@NonNull StudentViewHolder holder, int position) {
         Student student = students.get(position);
-        TextView surname = convertView.findViewById(R.id.student_surname);
-        TextView name = convertView.findViewById(R.id.student_name);
+        holder.surnameTextView.setText(student.getSurname());
+        holder.nameTextView.setText(student.getName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) {
+                    listener.onItemClick(student);
+                }
+            }
+        });
+    }
 
-        surname.setText(student.getSurname());
-        name.setText(student.getName());
-        return convertView;
+    @Override
+    public int getItemCount() {
+        return students.size();
+    }
+
+    public class StudentViewHolder extends RecyclerView.ViewHolder {
+        public TextView surnameTextView;
+        public TextView nameTextView;
+
+        public StudentViewHolder(@NonNull View itemView) {
+            super(itemView);
+            surnameTextView = itemView.findViewById(R.id.student_surname);
+            nameTextView = itemView.findViewById(R.id.student_name);
+        }
     }
 }
