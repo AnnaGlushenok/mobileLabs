@@ -4,7 +4,6 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Window;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +24,6 @@ public class SplashActivity extends AppCompatActivity {
         animator.setRepeatCount(android.animation.ValueAnimator.INFINITE);
         animator.setRepeatMode(android.animation.ValueAnimator.REVERSE);
         animator.start();
-
         new Handler().postDelayed(
                 new Runnable() {
                     @Override

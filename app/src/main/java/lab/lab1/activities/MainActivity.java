@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -32,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements Find {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Themes.setTheme(this);
         setContentView(R.layout.activity_main);
 
         viewPager = findViewById(R.id.view_pager);
@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements Find {
         studentFragment = new StudentFragment();
         pagerAdapter.addFragment(studentFragment, getResources().getString(R.string.student_tab));
         pagerAdapter.addFragment(new DetailFragment(), getResources().getString(R.string.detail_tab));
+        pagerAdapter.addFragment(new MapsFragment(), getResources().getString(R.string.map_tab));
         viewPager.setAdapter(pagerAdapter);
 
         Bundle bundle1 = new Bundle();
@@ -102,23 +103,18 @@ public class MainActivity extends AppCompatActivity implements Find {
             departmentDialog.show(getSupportFragmentManager(), "Department");
             command = "Department";
         } else if (id == R.id.theme_default)
-            this.setTheme(R.style.Base_Theme_Default);
+            Themes.changeTheme(this, "default");
         else if (id == R.id.theme_dark)
-            this.setTheme(R.style.Base_Theme_Dark);
+            Themes.changeTheme(this, "dark");
         else if (id == R.id.theme_color)
-            this.setTheme(R.style.Base_Theme_Color);
+            Themes.changeTheme(this, "color");
         else if (studentFragment.selectedStudent == null)
             Toast.makeText(this, "Выберите студента", Toast.LENGTH_LONG).show();
         else if (id == R.id.edit)
             studentFragment.presenter.onEditStudentClick(studentFragment.selectedStudent);
         else if (id == R.id.delete)
             deleteDialog.show();
-//        new Handler().post(new Runnable() {
-//            @Override
-//            public void run() {
-//                recreate();
-//            }
-//        });
+
         return super.onOptionsItemSelected(item);
     }
 
