@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">My Application</string>
-    <string name="div">/</string>
-    <string name="one">1</string>
+    <string name="app_name">Practice4</string>
+    <string name="action_settings">Нacтpoйи</string>
+    <string name="action_pig">Свинья</string>
+    <string name="action_pig_two">XpЯk</string>
+    <string name="action_pig_three">бopoв</string>
 </resources>
