@@ -1,8 +1,8 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Base.Theme.MyApplication" parent="Theme.AppCompat.DayNight">
+    <style name="Base.Theme.MyApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-         <item name="backgroundTint">#C0CAFF</item>
+         <item name="colorPrimary">#2245FF</item>
     </style>
 
     <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />

@@ -25,7 +25,7 @@ class PageFragment : Fragment() {
     }
 
     companion object {
-        fun getTitle(position: Int): String = "Страница № ${position}"
+        fun getTitle(position: Int): String = "Страница № ${position + 1}"
 
         @JvmStatic
         fun newInstance(param1: Int) =
