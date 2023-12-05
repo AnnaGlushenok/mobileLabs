@@ -4,15 +4,14 @@ import android.app.Service
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.IBinder
+import android.util.Log
 
 class MusicService : Service() {
-    private val player: MediaPlayer? = null
+    private var player: MediaPlayer? = null
 
     override fun onCreate() {
-//        val l = SoundPool(4, AudioManager.STREAM_MUSIC, 100)
-//        l.load(this, R.raw.music, 1)
-//        val player = MediaPlayer(this, R.raw.music)
-//        player.isLooping = true
+        player = MediaPlayer.create(this, R.raw.deutschland)
+        player?.isLooping = true
         super.onCreate()
     }
 
@@ -23,6 +22,7 @@ class MusicService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         player?.start()
+        Log.d("TAG", "onStartCommand")
         return super.onStartCommand(intent, flags, startId)
     }
 
