@@ -2,11 +2,10 @@ package com.example.myapplication
 
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
-import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.SeekBar
-import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -15,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val image = findViewById<ImageView>(R.id.imageView)
         image.setBackgroundResource(R.drawable.chel_animation)
+        image.startAnimation(AnimationUtils.loadAnimation(this, R.anim.anim))
         val frameAnimation: AnimationDrawable = image.background as AnimationDrawable
         findViewById<Button>(R.id.button).setOnClickListener {
             frameAnimation.start()
@@ -23,27 +23,23 @@ class MainActivity : AppCompatActivity() {
             frameAnimation.stop()
         }
         findViewById<SeekBar>(R.id.seek_bar)
-            .setOnClickListener(object : OnSeekBarChangeListener, View.OnClickListener {
+            .setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(
                     seekBar: SeekBar?,
                     progress: Int,
                     fromUser: Boolean
                 ) {
+//                    Log.d("TAG", "seek click")
                     frameAnimation.alpha = progress
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                    TODO("Not yet implemented")
+
                 }
 
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                    TODO("Not yet implemented")
-                }
 
-                override fun onClick(v: View?) {
-                    TODO("Not yet implemented")
                 }
-
             })
     }
 }

@@ -10,6 +10,7 @@
         android:id="@+id/seek_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:max="250"
         android:progress="255"
         app:layout_constraintLeft_toLeftOf="parent"
